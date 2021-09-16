@@ -9,8 +9,8 @@ class AnsiParser {
 
   AnsiParser(this.dark);
 
-  Color foreground = Colors.white30;
-  Color background = Colors.black;
+  Color? foreground;
+  Color? background;
   late List<TextSpan> spans;
 
   void parse(String s) {
@@ -64,16 +64,15 @@ class AnsiParser {
             state = TEXT;
             if (c == 'm') {
               codes.add(code);
+              // coloring
               handleCodes(codes);
             } else {
               text.write(buffer);
             }
           }
-
           break;
       }
     }
-
     spans.add(createSpan(text.toString()));
   }
 
@@ -81,7 +80,6 @@ class AnsiParser {
     if (codes.isEmpty) {
       codes.add(0);
     }
-
     switch (codes[0]) {
       case 0:
         foreground = getColor(0, true);
@@ -101,24 +99,32 @@ class AnsiParser {
     }
   }
 
-  Color getColor(int colorCode, bool foreground) {
+  Color? getColor(int colorCode, bool foreground) {
+    Color? color;
     switch (colorCode) {
       case 0:
-        return foreground ? Colors.black : Colors.transparent;
+        color = foreground ? Colors.black : Colors.transparent;
+        break;
       case 12:
-        return dark ? Colors.lightBlue : Colors.indigo;
+        color = (dark ? Colors.lightBlue[300] : Colors.indigo[700])!;
+        break;
       case 208:
-        return dark ? Colors.orange : Colors.orange;
+        color = (dark ? Colors.orange[300] : Colors.orange[700])!;
+        break;
       case 196:
-        return dark ? Colors.red : Colors.red;
+        color = (dark ? Colors.red[300] : Colors.red[700])!;
+        break;
       case 199:
-        return dark ? Colors.pink : Colors.pink;
-      default:
-        return Colors.transparent;
+        color = (dark ? Colors.pink[300] : Colors.pink[700])!;
+        break;
     }
+    return color;
   }
 
   TextSpan createSpan(String text) {
+    if (text.startsWith("│")) {
+      text = '\u001b$text';
+    }
     return TextSpan(
       text: text,
       style: TextStyle(

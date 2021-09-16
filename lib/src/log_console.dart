@@ -24,7 +24,7 @@ class LogConsole extends StatefulWidget {
     await Navigator.push(context, route);
   }
 
-  static void add(OutputEvent outputEvent, {int bufferSize = 20}) {
+  static void output(OutputEvent outputEvent, {int bufferSize = 20}) {
     while (_outputEventBuffer.length >= (bufferSize)) {
       _outputEventBuffer.removeFirst();
     }
@@ -106,16 +106,19 @@ class _LogConsoleState extends State<LogConsole> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = ThemeData();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: widget.dark
-          ? ThemeData(
+          ? theme.copyWith(
               brightness: Brightness.dark,
-              // accentColor: Colors.blueGrey,
+              colorScheme:
+                  theme.colorScheme.copyWith(secondary: Colors.blueGrey),
             )
-          : ThemeData(
+          : theme.copyWith(
               brightness: Brightness.light,
-              // accentColor: Colors.lightBlueAccent,
+              colorScheme:
+                  theme.colorScheme.copyWith(secondary: Colors.lightBlueAccent),
             ),
       home: Scaffold(
         body: SafeArea(
@@ -152,8 +155,7 @@ class _LogConsoleState extends State<LogConsole> {
 
   Widget _buildLogContent() {
     return Container(
-      // color: widget.dark ? Colors.black : Colors.grey[150],
-      color: Colors.grey[150],
+      color: widget.dark ? Colors.black : Colors.grey[150],
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: SizedBox(
@@ -183,7 +185,7 @@ class _LogConsoleState extends State<LogConsole> {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           const Text(
-            "Log Console",
+            "Log Console Viewer",
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -231,6 +233,7 @@ class _LogConsoleState extends State<LogConsole> {
               onChanged: (s) => _refreshFilter(),
               decoration: const InputDecoration(
                 labelText: "Filter log output",
+                labelStyle: TextStyle(color: Colors.grey),
                 border: OutlineInputBorder(),
               ),
             ),
@@ -284,7 +287,7 @@ class _LogConsoleState extends State<LogConsole> {
     var scrollPosition = _scrollController.position;
     await _scrollController.animateTo(
       scrollPosition.maxScrollExtent,
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 500),
       curve: Curves.easeOut,
     );
 
@@ -293,8 +296,10 @@ class _LogConsoleState extends State<LogConsole> {
 
   RenderedEvent _renderEvent(OutputEvent event) {
     var parser = AnsiParser(widget.dark);
+
     var text = event.lines.join('\n');
     parser.parse(text);
+
     return RenderedEvent(
       _currentId++,
       event.level,

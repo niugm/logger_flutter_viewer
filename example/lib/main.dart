@@ -9,23 +9,20 @@ void main() {
   log();
 }
 
-var logger =
-    Logger(printer: PrettyPrinter(printTime: true), output: ScreenOutput());
-
-var loggerNoStack = Logger(
-  printer: PrettyPrinter(methodCount: 0),
-);
+var logger = Logger(
+    printer: PrettyPrinter(printTime: true, colors: true, printEmojis: true),
+    output: ScreenOutput());
 
 void log() {
-  logger.d("Log message with 2 methods");
+  logger.d("This is a debug message");
 
-  loggerNoStack.i("Info message");
+  logger.i("Just a info message");
 
-  loggerNoStack.w("Just a warning!");
+  logger.w("This is a warning!");
 
   logger.e("Error! Something bad happened", "Test Error");
 
-  loggerNoStack.v({"key": 5, "value": "something"});
+  logger.v({"key": 5, "value": "something"});
 
   Future.delayed(const Duration(seconds: 5), log);
 }
@@ -33,8 +30,7 @@ void log() {
 class ScreenOutput extends LogOutput {
   @override
   void output(OutputEvent event) {
-    // event.lines.forEach(print);
-    LogConsole.add(event);
+    LogConsole.output(event);
   }
 }
 

@@ -1,15 +1,28 @@
 # logger_flutter_viewer
 
-A new flutter plugin project.
+The package is an extension for logger. You can add it to any Flutter app. Just shake the phone to show the console.
 
 ## Getting Started
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+``` dart
+import 'package:logger/logger.dart';
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+class ScreenOutput extends LogOutput {
+  @override
+  void output(OutputEvent event) {
+    LogConsole.output(event);
+  }
+}
 
+var logger = Logger(
+    printer: PrettyPrinter(printTime: true, colors: true, printEmojis: true),
+    output: ScreenOutput());
+
+logger.i("Just a info message");    
+```
+
+## License
+
+[MIT](https://opensource.org/licenses/MIT)
+
+Copyright (c) 2013-present, Guomeng(Peter) Niu
