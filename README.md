@@ -1,6 +1,12 @@
 # logger_flutter_viewer
 
-The package is an extension for logger. You can add it to any Flutter app. Just shake the phone to show the console.
+The package is an extension for [logger](https://pub.dev/packages/logger). You can add it to any Flutter app. Just shake the phone to show the console.
+
+The package is clone from [logger_flutter](https://github.com/leisim/logger_flutter), and some update:
+
+* fix some bugs
+* upgrade logger to latest version
+* replace [sensors](https://pub.dev/packages/sensors) with [sensors_plus](https://pub.dev/packages/sensors_plus)
 
 ## Getting Started
 

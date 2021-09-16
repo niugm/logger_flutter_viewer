@@ -122,6 +122,7 @@ class AnsiParser {
   }
 
   TextSpan createSpan(String text) {
+    // TODO: this is temp solution for align printer
     if (text.startsWith("│")) {
       text = '\u001b$text';
     }
