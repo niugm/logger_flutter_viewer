@@ -1,6 +1,6 @@
 name: logger_flutter_viewer
 description: The package is an extension for logger. You can add it to any Flutter app. Just shake the phone to show the console.
-version: 0.8.0
+version: 0.8.3
 homepage: "https://github.com/niugm/logger_flutter_viewer"
 repository: "https://github.com/niugm/logger_flutter_viewer"
 

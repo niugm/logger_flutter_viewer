@@ -1,5 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class AnsiParser {
@@ -123,7 +125,8 @@ class AnsiParser {
 
   TextSpan createSpan(String text) {
     // TODO: this is temp solution for align printer
-    if (text.startsWith("│")) {
+    // in my test phone,only iOS has align issue
+    if (Platform.isIOS && text.startsWith("│")) {
       text = '\u001b$text';
     }
     return TextSpan(
