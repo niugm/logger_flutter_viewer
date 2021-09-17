@@ -8,6 +8,13 @@ The package is clone from [logger_flutter](https://github.com/leisim/logger_flut
 * upgrade logger to latest version
 * replace [sensors](https://pub.dev/packages/sensors) with [sensors_plus](https://pub.dev/packages/sensors_plus)
 
+## Platform Support
+
+| Android |  iOS  | MacOS |  Web  | Linux | Windows |
+| :-----: | :---: | :---: | :---: | :---: | :-----: |
+|   ✔️   |   ✔️   |      |     |       |         |
+
+
 ## Getting Started
 
 ``` dart

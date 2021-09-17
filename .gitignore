@@ -4,4 +4,12 @@
 .packages
 .pub/
 
+doc/api/
 build/
+pubspec.lock
+
+# IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea/
