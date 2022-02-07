@@ -185,13 +185,28 @@ class _LogConsoleState extends State<LogConsole> {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           const Text(
-            "Log Console Viewer",
+            "Log Console",
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
           ),
           const Spacer(),
+          IconButton(
+            icon: const Icon(Icons.copy),
+            onPressed: () {
+              final text = _filteredBuffer
+                  .map((e) => e.lowerCaseText)
+                  .toList(growable: false)
+                  .join('\n');
+              Clipboard.setData(ClipboardData(text: text));
+
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                content: Text("Log console copied to clipboard"),
+                behavior: SnackBarBehavior.fixed,
+              ));
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
